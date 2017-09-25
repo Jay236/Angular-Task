@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Angular Task</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
+
+</head>
+
+<body ng-app="checkApp">
+    <div ng-controller="checkCtrl">
+        <div class="container">
+            <table class="table table-bordered table-striped">
+                <thead>
+
+                    <th>
+                        <a href="#" ng-click="sortType = 'accountnumber'; sortReverse = !sortReverse">
+            Account 
+            <span ng-show="sortType == 'accountnumber' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'accountnumber' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+                    </th>
+                    <th>
+                        <a href="#" ng-click="sortType = 'availableCash'; sortReverse = !sortReverse">
+          Available Cash 
+            <span ng-show="sortType == 'availableCash' && !sortReverse" class="fa fa-caret-down"></span>
+            <span ng-show="sortType == 'availableCash' && sortReverse" class="fa fa-caret-up"></span>
+          </a>
+                        <div style="font-size: 16px">Today's Change</div>
+
+                    </th>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="data in myData | orderBy:sortType:sortReverse |limitTo: paginationLimit()">
+                        <td><strong style="color: blue; font-size: 16px">{{data.accountName}} - {{data.accountnumber}}</strong>
+                        </td>
+                        <td>{{data.availableCash | currency}}
+
+                            <div ng-class="getPercentageClass(data.percentage)"><span>{{data.percentage}}</span><span>%/</span><span>{{data.todaysChange | currency}}</span></div>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+            <div class="show-more-btn" ng-show="hasMoreItemsToShow" ng-click="setLimit()">
+                   <a id="style" href="#" title="Load"></a>
+  </div>
+        </div>
+    </div>
+
+    <script src="index.js"></script>
+</body>
+
+</html>
